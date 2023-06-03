@@ -1,0 +1,11 @@
+.error-message {
+  color: red;
+}
+
+.output-history {
+  color: darkgrey;
+}
+
+li {
+  list-style: none;
+}

@@ -1,0 +1,46 @@
+<h1>Text Analyzer</h1>
+<p>Please enter a character and a text. Depending on the character input. <br>
+Either Vowels or Consonants will be counted.</p>
+<div>
+  <button (click)="toggleMode()">Toggle Mode</button>
+  <p *ngIf="toggleMode">{{mode}}</p>
+  <p *ngIf="onlineModeError" class="error-message">Online Mode currently not available. Please use Offline Mode.</p>
+
+</div>
+
+<div>
+  <form (ngSubmit)="submitForm(myForm)" #myForm="ngForm">
+    <label for="char-user-input">Char:</label>
+    <input type="text" id="char-user-input" name="char-user-input" ngModel required maxlength="1"
+           class="input">
+    <div *ngIf="validateCharInput()" class="error-message">Invalid input. Please enter alphabetic characters only.</div>
+    <label for="text-user-input">Text:</label>
+    <input type="text" id="text-user-input" name="text-user-input" ngModel required [(ngModel)]="textInput"
+           class="input">
+    <div *ngIf="validateTextInput()" class="error-message">Invalid input. At least one alphabetic character is necessary.</div>
+    <button type="submit" [disabled]="!myForm.form.valid" class="primary">Submit</button>
+  </form>
+</div>
+
+<div>
+  <h2>
+    Analyzer Output:
+  </h2>
+  <ul *ngIf="output?.outputText">
+    <li>{{output.inputText}}</li>
+    <li *ngFor="let item of output.outputText">{{ item }}</li>
+  </ul>
+</div>
+
+<div class="output-history" *ngIf="outputHistory.length > 0">
+  <h2>
+    Output History:
+  </h2>
+  <div *ngFor="let prevOutput of outputHistory; let i = index">
+    <p>UserInput Text: {{ prevOutput.inputText }}</p>
+    <ul>
+      <li *ngFor="let item of prevOutput.outputText">{{ item }}</li>
+    </ul>
+    <button (click)="removeSingleOutputHistory(i)" class="danger">Remove</button>
+  </div>
+</div>
